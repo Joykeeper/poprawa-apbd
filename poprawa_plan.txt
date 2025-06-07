@@ -1,0 +1,72 @@
+Already prepared:
+- GitHub repository
+- Add Models, Controllers, Services, DTOs, Exceptions folders
+- Program.cs
+- Setting up the connection string in appsettings.json
+- Create IDbService interface and DbService.cs in Services folder
+
+
+- GitHub:
+1. Clone https://github.com/Joykeeper/apbd-kol2.git
+2. Create your web app in rider
+3. Try commiting: 
+	echo "kolokwium 2" > README.md
+	git add README.md
+	git commit -m "Updated README.md"
+	git push origin main
+
+- SSMS:
+1. Server name:  (localdb)\MSSQLLocalDB, Encryption: mandatory, Trust certificate: true
+2. Choose right database when doing queries
+
+
+- Project:
+1. Install Nuget packages: 
+	Microsoft.EntityFrameworkCore
+	Microsoft.EntityFrameworkCore.SqlServer
+	Microsoft.EntityFrameworkCore.Tools
+	Microsoft.EntityFrameworkCore.Design
+	
+2. Create Model Classes according to database (copy code, use right constraints):
+	3.1 Add constraints: Key, required, StringLength, Column("name"), DataType(DataType.Date), [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true),
+	NotMapped(if in model but not in db), [PrimaryKey(nameof(OrderId), nameof(PastryId))], [DataType("decimal")]
+    [Precision(10, 2)]
+	3.2 Add navigation property like: public virtual ICollection<Enrollment> Enrollments { get; set; }
+		and [ForeignKey(nameof(ClientId))]
+			public Client Client { get; set; } = null!;
+	3.3 Add table names!!
+
+3. Create test data in DataBaseContext like this: 
+	modelBuilder.Entity<Course>().HasData(
+		new Course { Id = 1, Title = "Calculus", Credits = 3 },
+		new Course { Id = 2, Title = "Chemistry", Credits = 4 },
+		new Course { Id = 3, Title = "Literature", Credits = 3 }
+	);
+	Add precision if needed modelBuilder.Entity<OrderPastry>().ToTable("Order_Pastry");
+			
+4. Create and run migrations:
+	dotnet ef migrations --project [project name] add InitialCreate // in Rider: Tools -> EntityFramework -> Add Migration -> choose dbcontext, name and create
+	dotnet ef database --project [project name] update // in Rider -> .. -> Update Database
+	
+	
+# For each task (focus on one task at once)
+
+5. Create DTOs based on the task 
+6. Create Controllers based on the task (create exception handling)
+7. Add needed methods for the task to IDbService and implement them in DbService
+	Include throwing right Exception(create if needed)
+	Includes in LINQ not necessary if you project on Dtos.
+		
+
+8. Test through Postman the main workflow(with 1 exception at least)
+	
+
+TO DO:	
+- add Program.cs to helper
+- remove comments from dbcontext
+- add mock dbsets to databasecontext
+- make one file for all dtos: Dtos.cs
+
+If issues:
+- cannot copy: run  taskkill /PID 5100 /F (or the process number which is holding)
+- if updated dbcontext: create new migration, update database(for creating tables / inserts)
