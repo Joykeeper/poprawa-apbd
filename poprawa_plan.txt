@@ -32,8 +32,12 @@ Already prepared:
 4. Create Controllers based on the task (add exception handling and proper HTTP response codes)
 5. Add required methods for the task to IDbService and implement them in DbService
 	Include throwing the right exceptions
+	Don't forget to open connection 
+	Don't forget to wirte proper nams of parameters
+	Don't forget to set new command text of command when needed
 	ExecuteNonQuery: for INSERT, UPDATE lub DELETE, nothing returned
     ExecuteScalar: When you need to get something in return
+	Don't!!! write queries with tables as plurals
 		
 
 6. Test through Postman the main workflow(with 1 exception at least)
@@ -41,7 +45,3 @@ Already prepared:
 7. Push to Github
 
 8. Complete the assignment
-	
-
-If issues:
-- cannot copy: run  taskkill /PID 5100 /F (or the process number which is holding)
