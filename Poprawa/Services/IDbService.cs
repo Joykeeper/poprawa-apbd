@@ -1,8 +1,9 @@
-﻿namespace Poprawa.Services;
+﻿using Poprawa.DTOs;
+
+namespace Poprawa.Services;
 
 public interface IDbService
 {
-    // Task<List<Customer>> GetCustomers();
-    // Task<CustomerDto> GetCustomerById(int id);
-    // Task AddCustomer(CustomerDto customer);
+    Task<ProjectDto> GetProjectInfo(int id);
+    Task AddArtifact(NewArtifactProjectDto artifactProject);
 }
